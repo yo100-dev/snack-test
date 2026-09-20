@@ -1,0 +1,4 @@
+source: https://www.samyangfoods.com/upload/product/20260622/20260622144950820480.png
+page: https://www.samyangfoods.com/kor/brand/view.do?seq=53
+fetched: 2026-09-13
+use: reference only (manufacturer image) — not cleared for deployment

@@ -15,8 +15,8 @@
 ```bash
 npm install
 npm run dev        # http://localhost:4321
-npm run build      # dist/ 생성 (이미지 출처 검사 포함)
-npm run preview
+npm run build      # 배포용 vanilla 사이트를 dist/에 생성
+npm run build:astro # 기존 Astro 버전 별도 빌드
 ```
 
 > npm 캐시가 root 소유라 설치가 막히면:
@@ -61,6 +61,6 @@ _refs/                  참고용 사진 (배포 안 됨)
 
 ## 배포
 
-Cloudflare Pages 기준: 빌드 명령 `npm run build`, 출력 디렉터리 `dist`.
-배포 전에 `src/site.config.mjs` 의 `url` 과 `public/robots.txt` 의 sitemap 주소를 실제 도메인으로 바꾼다.
+Vercel은 `npm run build`로 `vanilla/` 버전을 `dist/`에 생성해 배포한다.
+`vanilla/images/`의 사진은 배포에 포함되며, 출처 메모가 있는 사진에는 참고 사진 표시가 붙는다.
 # snack-test

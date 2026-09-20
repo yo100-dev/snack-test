@@ -10,7 +10,7 @@ const root = join(here, '..');
 const products = JSON.parse(readFileSync(join(root, 'src/data/products.json'), 'utf8'));
 const guides = JSON.parse(readFileSync(join(root, 'src/data/guides.json'), 'utf8'));
 
-// 사진 우선순위: vanilla/images (배포용, 출처 확인됨) → ../_refs (크롤링 참고용, 로컬 전용)
+// 사진 우선순위: vanilla/images (배포용) → ../_refs (로컬 참고용)
 const EXTS = ['.jpg', '.jpeg', '.png', '.webp', '.avif'];
 const images = {};
 for (const [dir, prefix, ref] of [[join(here, 'images'), 'images/', false], [join(root, '_refs'), '../_refs/', true]]) {
@@ -19,7 +19,8 @@ for (const [dir, prefix, ref] of [[join(here, 'images'), 'images/', false], [joi
     const ext = extname(f).toLowerCase();
     if (!EXTS.includes(ext)) continue;
     const slug = basename(f, extname(f));
-    if (!images[slug]) images[slug] = { src: prefix + f, ref };
+    // 출처 메모가 붙은 참고 사진은 배포 화면에서도 표시한다.
+    if (!images[slug]) images[slug] = { src: prefix + f, ref: ref || existsSync(join(dir, `${slug}.source.txt`)) };
   }
 }
 

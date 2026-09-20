@@ -1,0 +1,4 @@
+source: https://www.crown.co.kr/upload/system/item/%EB%B2%84%ED%84%B0%EC%99%80%ED%94%8C%28%EB%8C%80%29_%EC%9E%85%EC%B2%B4%EC%9D%B4%EB%AF%B8%EC%A7%800.png
+page: https://www.crown.co.kr/product/view?idx=137
+fetched: 2026-09-13
+use: reference only (manufacturer image) — not cleared for deployment

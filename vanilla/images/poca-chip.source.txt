@@ -1,0 +1,4 @@
+source: https://www.orionworld.com/upload/goods/8d31ecc8f226ad560892cf1e854e2cbf.png
+page: https://www.orionworld.com/goods/view/27?goodsno=26&category=0102
+fetched: 2026-09-13
+use: reference only (manufacturer image) — not cleared for deployment

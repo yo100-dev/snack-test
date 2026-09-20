@@ -1,0 +1,4 @@
+source: https://www.ht.co.kr/api/common/file/file?fileId=197899
+page: https://www.ht.co.kr/product/list (productId 63)
+fetched: 2026-09-13
+use: reference only (manufacturer image) — not cleared for deployment

@@ -1,0 +1,4 @@
+source: https://www.crown.co.kr/upload/system/item/%EC%A3%A0%EB%A6%AC%ED%90%81_1.5k_74g.jpg
+page: https://www.crown.co.kr/product/view?idx=148
+fetched: 2026-09-13
+use: reference only (manufacturer image) — not cleared for deployment

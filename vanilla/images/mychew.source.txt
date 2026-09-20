@@ -1,0 +1,4 @@
+source: https://www.crown.co.kr/upload/system/product/bfdfd67dbbac4419b0d3960444f1a7ba_%C3%AB%C2%A7%C2%88%C3%AC%C2%9D%C2%B4%C3%AC%C2%AE%C2%B8%20%C3%AB%C2%94%C2%B8%C3%AA%C2%B8%C2%B0%20%C3%AC%C2%9E%C2%85%C3%AC%C2%B2%C2%B4%C3%AC%C2%9D%C2%B4%C3%AB%C2%AF%C2%B8%C3%AC%C2%A7%C2%80%20%C3%AC%C2%A0%C2%84%C3%AB%C2%A9%C2%B4.jpeg
+page: https://www.crown.co.kr/product/view?idx=316
+fetched: 2026-09-13
+use: reference only (manufacturer image) — not cleared for deployment

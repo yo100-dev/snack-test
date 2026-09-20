@@ -1,0 +1,4 @@
+source: https://image.nongshim.com/non/pro/1647994108215.jpg
+page: https://brand.nongshim.com/chapagetti/product/index
+fetched: 2026-09-13
+use: reference only (manufacturer image) — not cleared for deployment

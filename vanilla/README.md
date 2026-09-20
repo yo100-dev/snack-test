@@ -45,5 +45,5 @@ node vanilla/build-data.mjs
 
 `vanilla/images/<slug>.jpg` → 없으면 `../_refs/<slug>.*` 순서로 붙인다. 둘 다 없으면 한글 이름 카드.
 
-지금 붙어 있는 21장은 전부 `_refs/` 의 **제조사 사이트 이미지(사용 허락 없음)** 다.
-화면에 "Reference photo" 표시가 뜬다. 이 상태로 배포하지 않는다.
+현재 배포에 포함된 21장은 `_refs/`에서 복사한 제조사 사이트 참고 이미지다.
+각 이미지의 `.source.txt`를 함께 보관하고 화면에 "Reference photo"를 표시한다.

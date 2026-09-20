@@ -1,0 +1,4 @@
+source: https://webimage.ldcc.co.kr/upload/conf/upload/2022/06/23/2022062373d4c0ce28a84c2.png
+page: https://www.lottewellfood.com/brand/product?searchType1=LC300
+fetched: 2026-09-13
+use: reference only (manufacturer image) — not cleared for deployment

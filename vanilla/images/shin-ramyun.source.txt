@@ -1,0 +1,4 @@
+source: https://image.nongshim.com/non/pro/1734997124337.jpg
+page: https://brand.nongshim.com/shinramyun/main/index
+fetched: 2026-09-13
+use: reference only (manufacturer image) — not cleared for deployment

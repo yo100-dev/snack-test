@@ -1,0 +1,4 @@
+source: https://www.otoki.com/pds/product/cat_ko/2310/3399ed06bd1d4f29a3cb0df825c576d8.png
+page: https://www.otoki.com/product/product_cat_2nd?idx=1
+fetched: 2026-09-13
+use: reference only (manufacturer image) — not cleared for deployment

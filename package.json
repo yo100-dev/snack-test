@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "node scripts/check-images.mjs && astro build",
+    "build": "node scripts/build-vanilla.mjs",
+    "build:astro": "node scripts/check-images.mjs && astro build",
     "preview": "astro preview",
     "check:images": "node scripts/check-images.mjs",
     "dev:refs": "node scripts/link-refs.mjs && astro dev"
