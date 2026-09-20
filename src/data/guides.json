@@ -1,0 +1,96 @@
+[
+{
+  "slug": "what-korean-snacks-to-buy",
+  "updated": "2026-09-10",
+  "picks": [
+    { "slug": "honey-butter-chip", "why": { "en": "The one nobody outside Korea has an equivalent of. Sweet potato chip — start here.", "ja": "韓国以外に同じものがない一袋。甘いポテトチップス。まずはこれから。", "ko": "한국 밖에는 비슷한 게 없는 과자. 달콤한 감자칩, 여기서 시작한다." } },
+    { "slug": "kkobuk-chip", "why": { "en": "Four fused layers. The texture is the reason it sells abroad.", "ja": "4層が重なった食感。海外で売れている理由はここ。", "ko": "네 겹이 붙은 식감. 이 과자는 그게 전부다." } },
+    { "slug": "shin-ramyun", "why": { "en": "The baseline instant noodle. Buy the 5-pack — singles cost far more per unit.", "ja": "インスタント麺の基準。5個パックが単品よりかなり割安。", "ko": "기준이 되는 라면. 5개 묶음으로 산다. 낱개는 개당 훨씬 비싸다." } },
+    { "slug": "yakgwa", "why": { "en": "The oldest thing on the shelf and the most distinctly Korean. Very sweet — one is plenty.", "ja": "棚で最も古く、最も韓国的。とても甘いので1個で十分。", "ko": "매대에서 가장 오래되고 가장 한국적인 것. 아주 달아서 하나면 충분하다." } },
+    { "slug": "choco-pie", "why": { "en": "A box of 12 is a complete gift with no wrapping required.", "ja": "12個入りの箱ひとつで、包装なしでも立派な手土産。", "ko": "12개입 한 상자면 포장 없이도 완성된 선물." } },
+    { "slug": "saeukkang", "why": { "en": "Buy it if you are drinking beer tonight. Not a souvenir.", "ja": "今夜ビールを飲むなら。お土産向きではない。", "ko": "오늘 밤 맥주를 마신다면. 기념품은 아니다." } }
+  ],
+  "i18n": {
+    "en": {
+      "title": "What Korean snacks to buy at the supermarket",
+      "short": "Six picks and why, for a first trip",
+      "lede": "You have a basket, twenty minutes and an aisle of bags you cannot read. This is the short version: six things worth the suitcase space, and what each one actually tastes like.",
+      "outro": "Prices are roughly what a large mart charges. Convenience stores run higher; Daiso and discount marts run lower."
+    },
+    "ja": {
+      "title": "韓国のスーパーで買うべきお菓子",
+      "short": "初めての旅行のための6品と、その理由",
+      "lede": "カゴを持って、残り20分、目の前は読めない袋の壁。手短に言うと、スーツケースの場所を使う価値のある6つと、それぞれの実際の味はこうです。",
+      "outro": "価格は大型マートの目安です。コンビニは高く、ダイソーやディスカウントマートは安くなります。"
+    },
+    "ko": {
+      "title": "한국 마트에서 사야 할 과자",
+      "short": "첫 여행이라면 여섯 개와 그 이유",
+      "lede": "장바구니 하나, 남은 시간 20분, 눈앞엔 읽을 수 없는 봉지들. 짧게 말하면, 캐리어 자리를 내줄 만한 여섯 가지와 각각의 실제 맛은 이렇다.",
+      "outro": "가격은 대형마트 기준 대략값이다. 편의점은 더 비싸고, 다이소나 할인마트는 더 싸다."
+    }
+  }
+},
+{
+  "slug": "korean-snacks-for-coworkers",
+  "updated": "2026-09-10",
+  "picks": [
+    { "slug": "gorae-bab", "why": { "en": "The multipack of small bags is built for this. One bag each, no cutting or sorting.", "ja": "小袋の大袋入りはまさにこのため。一人一袋、切り分け不要。", "ko": "작은 봉지 멀티팩은 딱 이 용도다. 한 사람에 한 봉지, 자르거나 나눌 필요가 없다." } },
+    { "slug": "pepero", "why": { "en": "Cheap, recognisable, and one box splits into individual sticks if you need it to.", "ja": "安くて見て分かる。必要なら1本ずつにも分けられる。", "ko": "싸고, 누구나 알아보고, 필요하면 한 상자를 막대 하나씩 나눌 수 있다." } },
+    { "slug": "couque-dasse", "why": { "en": "Individually wrapped and reads as a proper gift rather than a snack. Carry it on — it breaks.", "ja": "個包装で、おやつというよりきちんとした贈り物に見える。割れるので手荷物で。", "ko": "낱개 포장이고 간식보다 제대로 된 선물처럼 보인다. 부서지니까 기내에 들고 탄다." } },
+    { "slug": "butter-waffle", "why": { "en": "The best value on this page. A big box costs very little and looks like a bakery item.", "ja": "このページで一番コスパがいい。大きな箱が安く、焼き菓子店のように見える。", "ko": "이 페이지에서 가성비가 가장 좋다. 큰 상자가 싸고 빵집 과자처럼 보인다." } },
+    { "slug": "mychew", "why": { "en": "Pocket-sized and cheap enough to buy five packs at the airport.", "ja": "ポケットサイズで、空港で5本まとめ買いしても痛くない値段。", "ko": "주머니 크기에, 공항에서 다섯 개 사도 부담 없는 가격." } }
+  ],
+  "i18n": {
+    "en": {
+      "title": "Korean snacks to bring back for coworkers",
+      "short": "Individually wrapped, survives a suitcase, splits evenly",
+      "lede": "Office souvenirs have three requirements that have nothing to do with taste: individually wrapped, hard to crush, and divisible without a knife. These five clear all three.",
+      "outro": "Skip anything in a single large bag — you will end up handing round an open packet, which is exactly what you were trying to avoid."
+    },
+    "ja": {
+      "title": "職場へのお土産に向く韓国のお菓子",
+      "short": "個包装・つぶれにくい・きれいに分けられる",
+      "lede": "職場のお土産には、味とは関係のない3つの条件があります。個包装であること、つぶれにくいこと、そして包丁なしで分けられること。この5つは全部クリアします。",
+      "outro": "大袋ひとつのタイプは避けましょう。開けた袋を回すことになり、それこそ避けたかった状況です。"
+    },
+    "ko": {
+      "title": "회사 동료에게 사 갈 한국 과자",
+      "short": "낱개 포장, 캐리어에서 안 부서지고, 나누기 쉬운 것",
+      "lede": "회사용 기념품에는 맛과 상관없는 조건이 세 가지 있다. 낱개 포장일 것, 잘 안 눌릴 것, 칼 없이 나눌 수 있을 것. 이 다섯 개는 셋 다 통과한다.",
+      "outro": "큰 봉지 하나짜리는 피한다. 결국 뜯은 봉지를 돌리게 되는데, 그게 바로 피하려던 상황이다."
+    }
+  }
+},
+{
+  "slug": "korean-snacks-not-spicy",
+  "updated": "2026-09-10",
+  "picks": [
+    { "slug": "jin-ramen", "why": { "en": "The blue bag is Mild. One of very few Korean instant noodles that is genuinely not spicy.", "ja": "青い袋がマイルド。本当に辛くない数少ない韓国インスタント麺のひとつ。", "ko": "파란 봉지가 순한맛. 정말 맵지 않은 몇 안 되는 한국 라면 중 하나." } },
+    { "slug": "chapagetti", "why": { "en": "Black bean sauce, zero chilli. Sits right beside the red bags and looks similar — check for black.", "ja": "黒豆味噌ソースで唐辛子ゼロ。赤い袋の隣にあって似て見えるので、黒を目印に。", "ko": "짜장 소스라 고추가 전혀 없다. 빨간 봉지 바로 옆에 있고 비슷해 보이니 검정을 확인한다." } },
+    { "slug": "banana-kick", "why": { "en": "Dissolves on the tongue. There is no safer bag on the shelf.", "ja": "舌の上で溶ける。棚でこれ以上安全な袋はない。", "ko": "혀 위에서 녹는다. 매대에서 이보다 안전한 봉지는 없다." } },
+    { "slug": "home-run-ball", "why": { "en": "Mild chocolate cream, and less sweet than most things here.", "ja": "やさしいチョコクリーム。この中では甘さも控えめ。", "ko": "순한 초콜릿 크림이고, 여기 있는 것 중에서 덜 단 편이다." } },
+    { "slug": "kancho", "why": { "en": "Plain biscuit, chocolate centre, a drawing on every piece.", "ja": "プレーンなビスケットに中はチョコ。一粒ずつ絵が違う。", "ko": "평범한 비스킷에 초콜릿 속, 한 알마다 그림이 있다." } }
+  ],
+  "i18n": {
+    "en": {
+      "title": "Korean snacks that are not spicy",
+      "short": "For anyone who cannot eat chilli",
+      "lede": "Korean food's reputation is built on chilli, and the snack aisle really is dominated by red bags. But plenty of it is not spicy at all — you just have to know which bags to reach for.",
+      "outro": "As a rule of thumb in the noodle aisle: red bag means chilli, blue or black usually does not. It is not a perfect rule, but it works most of the time."
+    },
+    "ja": {
+      "title": "辛くない韓国のお菓子・インスタント麺",
+      "short": "辛いものが苦手な人へ",
+      "lede": "韓国の食べ物といえば唐辛子、そして実際スナック売り場は赤い袋だらけです。でも辛くないものもたくさんあります。どの袋に手を伸ばせばいいかを知っているかどうかだけの話です。",
+      "outro": "麺売り場の目安として、赤い袋は唐辛子入り、青や黒はたいてい違います。完璧なルールではありませんが、だいたい当たります。"
+    },
+    "ko": {
+      "title": "맵지 않은 한국 과자·라면",
+      "short": "매운 걸 못 먹는 사람을 위해",
+      "lede": "한국 음식은 고추로 유명하고, 과자 매대도 실제로 빨간 봉지가 많다. 하지만 전혀 맵지 않은 것도 많다. 어느 봉지를 집어야 하는지만 알면 된다.",
+      "outro": "라면 매대의 대략적인 기준: 빨간 봉지는 고추가 들었고, 파랑이나 검정은 대개 아니다. 완벽한 규칙은 아니지만 대부분 맞는다."
+    }
+  }
+}
+]

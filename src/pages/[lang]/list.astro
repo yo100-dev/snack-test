@@ -1,0 +1,66 @@
+---
+import Base from '../../layouts/Base.astro';
+import { products, imageFor, nameFor } from '../../lib/products';
+import { SITE } from '../../site.config.mjs';
+import { t, type Lang } from '../../i18n/ui';
+
+export function getStaticPaths() {
+  return SITE.languages.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Lang;
+const s = t(lang);
+const altPaths = Object.fromEntries(SITE.languages.map((l) => [l, `/${l}/list/`]));
+
+// 전체 제품을 조용히 심어두고, 브라우저에서 저장된 것만 보여준다. 서버 호출 없음.
+const seed = products.map((p) => ({
+  slug: p.slug,
+  name: nameFor(p, lang),
+  ko: p.ko,
+  img: imageFor(p.slug),
+  href: `/${lang}/snacks/${p.slug}/`,
+}));
+---
+<Base lang={lang} title={`${s.myList} | ${SITE.name}`} description={s.listIntro} altPaths={altPaths}>
+  <section class="hero">
+    <h1>{s.myList}</h1>
+    <p>{s.listIntro}</p>
+  </section>
+
+  <div id="rows"></div>
+  <p class="empty" id="listempty">{s.listEmpty}</p>
+
+  <script type="application/json" id="seed" set:html={JSON.stringify(seed)} />
+  <script define:vars={{ removeLabel: s.remove, pendingLabel: s.photoPending }}>
+    const seed = JSON.parse(document.getElementById('seed').textContent);
+    const byslug = Object.fromEntries(seed.map((x) => [x.slug, x]));
+    const rows = document.getElementById('rows');
+    const empty = document.getElementById('listempty');
+
+    function render() {
+      let saved = [];
+      try { saved = JSON.parse(localStorage.getItem('snackdex:list') || '[]'); } catch {}
+      const items = saved.map((sl) => byslug[sl]).filter(Boolean);
+      empty.classList.toggle('hidden', items.length > 0);
+      rows.replaceChildren(...items.map((it) => {
+        const el = document.createElement('div');
+        el.className = 'listrow';
+        el.innerHTML =
+          '<a class="lt" href="' + it.href + '">' +
+            (it.img ? '<img src="' + it.img + '" alt="" loading="lazy">' : pendingLabel) +
+          '</a>' +
+          '<a class="li" href="' + it.href + '" style="text-decoration:none;color:inherit">' +
+            '<b></b><span></span>' +
+          '</a>' +
+          '<button type="button" data-save="' + it.slug + '"></button>';
+        el.querySelector('b').textContent = it.name;
+        el.querySelector('span').textContent = it.ko;
+        el.querySelector('button').textContent = removeLabel;
+        return el;
+      }));
+    }
+
+    render();
+    document.addEventListener('snackdex:change', render);
+  </script>
+</Base>

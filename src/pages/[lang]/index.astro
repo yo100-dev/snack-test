@@ -1,0 +1,181 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { products } from '../../lib/products';
+import guides from '../../data/guides.json';
+import { SITE } from '../../site.config.mjs';
+import { t, categories, allergenLabels, LANGS, type Lang } from '../../i18n/ui';
+
+export function getStaticPaths() {
+  return SITE.languages.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Lang;
+const s = t(lang);
+const altPaths = Object.fromEntries(SITE.languages.map((l) => [l, `/${l}/`]));
+
+const usedCats = [...new Set(products.map((p) => p.category))];
+const usedAllergens = [...new Set(products.flatMap((p) => p.allergens.contains))];
+
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: `${SITE.name} — ${s.siteTagline}`,
+  description: s.siteDesc,
+  inLanguage: lang,
+  url: new URL(`/${lang}/`, SITE.url).href,
+  mainEntity: {
+    '@type': 'ItemList',
+    numberOfItems: products.length,
+    itemListElement: products.map((p, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: p.i18n[lang]?.name ?? p.i18n.en.name,
+      url: new URL(`/${lang}/snacks/${p.slug}/`, SITE.url).href,
+    })),
+  },
+};
+---
+<Base
+  lang={lang}
+  title={`${SITE.name} — ${s.siteTagline}`}
+  description={s.siteDesc}
+  altPaths={altPaths}
+  jsonld={jsonld}
+>
+  <section class="hero">
+    <h1>{s.siteTagline}</h1>
+    <p>{s.siteDesc}</p>
+  </section>
+
+  <div class="searchbox">
+    <svg viewBox="0 0 24 24" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+    <input type="search" id="q" placeholder={s.searchPlaceholder} aria-label={s.search} autocomplete="off" />
+  </div>
+
+  <details class="filters">
+    <summary>{s.filters}</summary>
+    <div class="filter-body">
+      <div class="filter-group">
+        <h3>{s.filterCategory}</h3>
+        <div class="chips" data-fgroup="cat">
+          {usedCats.map((c) => (
+            <button type="button" class="chip" aria-pressed="false" data-cat={c}>
+              {categories[c]?.[lang] ?? c}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <h3>{s.filterDiet}</h3>
+        <div class="chips" data-fgroup="diet">
+          <button type="button" class="chip" aria-pressed="false" data-diet="pf">{s.porkFree}</button>
+          <button type="button" class="chip" aria-pressed="false" data-diet="bf">{s.beefFree}</button>
+          <button type="button" class="chip" aria-pressed="false" data-diet="vg">{s.vegetarian}</button>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <h3>{s.filterAllergen}</h3>
+        <div class="chips" data-fgroup="allergen">
+          {usedAllergens.map((a) => (
+            <button type="button" class="chip neg" aria-pressed="false" data-allergen={a}>
+              {allergenLabels[a]?.[lang] ?? a}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <h3>{s.filterOther}</h3>
+        <div class="chips" data-fgroup="other">
+          <button type="button" class="chip" aria-pressed="false" data-flag="w">{s.optWrapped}</button>
+          <button type="button" class="chip" aria-pressed="false" data-flag="g">{s.optGift}</button>
+          <button type="button" class="chip" aria-pressed="false" data-flag="mild">{s.optMild}</button>
+        </div>
+      </div>
+
+      <div class="filter-actions">
+        <span><b id="count">{products.length}</b> {s.results}</span>
+        <button type="button" class="linkbtn" id="clear">{s.clear}</button>
+      </div>
+    </div>
+  </details>
+
+  <details class="notice compact">
+    <summary><strong>⚠︎ {s.unverified}</strong></summary>
+    <p>{s.draftWarning}</p>
+  </details>
+
+  <div class="grid" id="grid">
+    {products.map((p) => <ProductCard p={p} lang={lang} />)}
+    <p class="empty hidden" id="empty">{s.noResults}</p>
+  </div>
+
+  <section class="block">
+    <h2>{s.guidesTitle}</h2>
+    <div class="guide-strip">
+      {guides.map((g) => {
+        const gc = g.i18n[lang] ?? g.i18n.en;
+        return (
+          <a class="guide-card" href={`/${lang}/guides/${g.slug}/`}>
+            <b>{gc.title}</b><span>{gc.short}</span>
+          </a>
+        );
+      })}
+    </div>
+  </section>
+</Base>
+
+<script>
+  const grid = document.getElementById('grid');
+  const cards = [...grid.querySelectorAll('[data-product]')];
+  const data = new WeakMap();
+  cards.forEach((c) => data.set(c, JSON.parse(c.dataset.product)));
+
+  const q = document.getElementById('q');
+  const count = document.getElementById('count');
+  const empty = document.getElementById('empty');
+  const chips = [...document.querySelectorAll('.chip')];
+
+  const on = (sel) => chips.filter((c) => c.matches(sel) && c.getAttribute('aria-pressed') === 'true');
+
+  function apply() {
+    const term = q.value.trim().toLowerCase();
+    const cats = on('[data-cat]').map((c) => c.dataset.cat);
+    const diets = on('[data-diet]').map((c) => c.dataset.diet);
+    const bad = on('[data-allergen]').map((c) => c.dataset.allergen);
+    const flags = on('[data-flag]').map((c) => c.dataset.flag);
+
+    let n = 0;
+    for (const card of cards) {
+      const d = data.get(card);
+      const ok =
+        (!term || d.q.includes(term)) &&
+        (!cats.length || cats.includes(d.c)) &&
+        diets.every((k) => d[k]) &&
+        !bad.some((a) => d.a.includes(a)) &&
+        flags.every((f) => (f === 'mild' ? d.s === 0 : d[f]));
+      card.classList.toggle('hidden', !ok);
+      if (ok) n++;
+    }
+    count.textContent = String(n);
+    empty.classList.toggle('hidden', n > 0);
+  }
+
+  document.querySelector('.filters').addEventListener('click', (e) => {
+    const chip = e.target.closest('.chip');
+    if (!chip) return;
+    chip.setAttribute('aria-pressed', chip.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+    apply();
+  });
+
+  q.addEventListener('input', apply);
+
+  document.getElementById('clear').addEventListener('click', () => {
+    chips.forEach((c) => c.setAttribute('aria-pressed', 'false'));
+    q.value = '';
+    apply();
+  });
+</script>

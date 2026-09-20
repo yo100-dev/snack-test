@@ -1,0 +1,79 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { products, imageFor, nameFor } from '../../../lib/products';
+import guidesRaw from '../../../data/guides.json';
+import { SITE } from '../../../site.config.mjs';
+import { t, type Lang } from '../../../i18n/ui';
+
+const guides = guidesRaw as any[];
+
+export function getStaticPaths() {
+  const gs = guidesRaw as any[];
+  return SITE.languages.flatMap((lang) =>
+    gs.map((g) => ({ params: { lang, slug: g.slug }, props: { g } }))
+  );
+}
+
+const lang = Astro.params.lang as Lang;
+const { g } = Astro.props;
+const s = t(lang);
+const c = g.i18n[lang] ?? g.i18n.en;
+const altPaths = Object.fromEntries(SITE.languages.map((l) => [l, `/${l}/guides/${g.slug}/`]));
+const byslug = Object.fromEntries(products.map((p) => [p.slug, p]));
+const picks = g.picks.map((pk: any) => ({ p: byslug[pk.slug], why: pk.why[lang] ?? pk.why.en })).filter((x: any) => x.p);
+const others = guides.filter((o) => o.slug !== g.slug);
+
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: c.title,
+  description: c.lede,
+  inLanguage: lang,
+  datePublished: g.updated,
+  dateModified: g.updated,
+  mainEntityOfPage: new URL(`/${lang}/guides/${g.slug}/`, SITE.url).href,
+  publisher: { '@type': 'Organization', name: SITE.name },
+  about: picks.map((x: any) => ({ '@type': 'Product', name: nameFor(x.p, lang), alternateName: x.p.ko })),
+};
+---
+<Base lang={lang} title={`${c.title} | ${SITE.name}`} description={c.lede.slice(0, 155)} altPaths={altPaths} jsonld={jsonld}>
+  <nav class="crumb"><a href={`/${lang}/`}>← {s.backToAll}</a></nav>
+
+  <article class="guide-body">
+    <h1>{c.title}</h1>
+    <p class="lede">{c.lede}</p>
+
+    {picks.map((x: any, i: number) => {
+      const img = imageFor(x.p.slug);
+      return (
+        <section class="pick">
+          <h2>{i + 1}. {nameFor(x.p, lang)} <span style="color:var(--ink-3);font-weight:600;font-size:15px">{x.p.ko}</span></h2>
+          <p class="why">{x.why}</p>
+          <a class="picklink" href={`/${lang}/snacks/${x.p.slug}/`}>{s.findIt} →</a>
+        </section>
+      );
+    })}
+
+    <p style="color:var(--ink-2);font-size:14.5px">{c.outro}</p>
+  </article>
+
+  <div class="notice compact" style="margin-top:22px">
+    <div style="padding:9px 13px;font-size:12.5px"><strong>⚠︎ {s.unverified}</strong> {s.draftWarning}</div>
+  </div>
+
+  {others.length > 0 && (
+    <section class="block">
+      <h2>{s.relatedTitle}</h2>
+      <div class="guide-strip">
+        {others.map((o) => {
+          const oc = o.i18n[lang] ?? o.i18n.en;
+          return (
+            <a class="guide-card" href={`/${lang}/guides/${o.slug}/`}>
+              <b>{oc.title}</b><span>{oc.short}</span>
+            </a>
+          );
+        })}
+      </div>
+    </section>
+  )}
+</Base>

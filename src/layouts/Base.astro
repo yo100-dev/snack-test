@@ -1,0 +1,107 @@
+---
+import '../styles/global.css';
+import { SITE } from '../site.config.mjs';
+import { LANGS, t, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description: string;
+  /** 언어 코드 -> 해당 언어 URL 경로. hreflang 생성용 */
+  altPaths: Record<string, string>;
+  jsonld?: object;
+  ogImage?: string;
+}
+const { lang, title, description, altPaths, jsonld, ogImage } = Astro.props;
+const s = t(lang);
+const canonical = new URL(altPaths[lang], SITE.url).href;
+const og = ogImage ? new URL(ogImage, SITE.url).href : undefined;
+---
+<!doctype html>
+<html lang={lang}>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  {Object.entries(altPaths).map(([l, p]) => (
+    <link rel="alternate" hreflang={l} href={new URL(p, SITE.url).href} />
+  ))}
+  <link rel="alternate" hreflang="x-default" href={new URL(altPaths[SITE.defaultLang], SITE.url).href} />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content={SITE.name} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  {og && <meta property="og:image" content={og} />}
+  <meta name="twitter:card" content={og ? 'summary_large_image' : 'summary'} />
+  <meta name="theme-color" content="#fbf8f3" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#17150f" media="(prefers-color-scheme: dark)" />
+  {jsonld && <script type="application/ld+json" set:html={JSON.stringify(jsonld)} />}
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="logo" href={`/${lang}/`}>Snack<span>dex</span></a>
+      <a class="hbtn" href={`/${lang}/list/`} data-list-count data-count="0">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round"><path d="M5 3v18l7-4 7 4V3z"/></svg>
+        {s.myList}
+      </a>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <slot />
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <nav class="langrow" aria-label={s.langLabel}>
+        {Object.entries(LANGS).map(([l, label]) => (
+          <a href={altPaths[l] ?? `/${l}/`} hreflang={l} aria-current={l === lang ? 'true' : undefined}>{label}</a>
+        ))}
+      </nav>
+      <p>
+        {SITE.name} — {s.siteTagline}.<br />
+        Product names and packaging are trademarks of their respective owners.
+        This site is an independent guide and is not affiliated with any manufacturer.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // 쇼핑목록: 로컬 저장. 계정 없음, 서버 없음.
+    const KEY = 'snackdex:list';
+    const read = () => { try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch { return []; } };
+    const write = (v) => { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch {} };
+
+    function paint() {
+      const list = read();
+      document.querySelectorAll('[data-list-count]').forEach((el) => {
+        el.setAttribute('data-count', String(list.length));
+      });
+      document.querySelectorAll('[data-save]').forEach((btn) => {
+        btn.setAttribute('aria-pressed', list.includes(btn.dataset.save) ? 'true' : 'false');
+      });
+    }
+
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-save]');
+      if (!btn) return;
+      e.preventDefault();
+      const slug = btn.dataset.save;
+      const list = read();
+      const i = list.indexOf(slug);
+      i === -1 ? list.push(slug) : list.splice(i, 1);
+      write(list);
+      paint();
+      document.dispatchEvent(new CustomEvent('snackdex:change'));
+    });
+
+    paint();
+    window.addEventListener('pageshow', paint);
+  </script>
+</body>
+</html>

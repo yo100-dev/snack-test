@@ -1,0 +1,17 @@
+{
+  "name": "k-snack-site",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "node scripts/check-images.mjs && astro build",
+    "preview": "astro preview",
+    "check:images": "node scripts/check-images.mjs",
+    "dev:refs": "node scripts/link-refs.mjs && astro dev"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "astro": "^5.18.2"
+  }
+}

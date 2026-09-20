@@ -1,0 +1,140 @@
+---
+import Base from '../../../layouts/Base.astro';
+import ProductCard from '../../../components/ProductCard.astro';
+import { products, imageFor, nameFor, copyFor, priceLabel } from '../../../lib/products';
+import { SITE } from '../../../site.config.mjs';
+import { t, categories, allergenLabels, type Lang } from '../../../i18n/ui';
+
+export function getStaticPaths() {
+  return SITE.languages.flatMap((lang) =>
+    products.map((p) => ({ params: { lang, slug: p.slug }, props: { p } }))
+  );
+}
+
+const lang = Astro.params.lang as Lang;
+const { p } = Astro.props;
+const s = t(lang);
+const c = copyFor(p, lang);
+const name = nameFor(p, lang);
+const img = imageFor(p.slug);
+const altPaths = Object.fromEntries(SITE.languages.map((l) => [l, `/${l}/snacks/${p.slug}/`]));
+const brand = p.brand[lang] ?? p.brand.en;
+
+const related = products
+  .filter((o) => o.slug !== p.slug && o.category === p.category)
+  .slice(0, 4);
+
+const title = `${name} (${p.ko})${brand ? ` — ${brand}` : ''} | ${SITE.name}`;
+const description = c.taste.slice(0, 155);
+
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name,
+  alternateName: p.ko,
+  description: c.taste,
+  category: categories[p.category]?.en ?? p.category,
+  inLanguage: lang,
+  ...(brand ? { brand: { '@type': 'Brand', name: brand } } : {}),
+  ...(img ? { image: new URL(img, SITE.url).href } : {}),
+  offers: {
+    '@type': 'AggregateOffer',
+    priceCurrency: 'KRW',
+    lowPrice: p.priceKRW[0],
+    highPrice: p.priceKRW[1],
+    availability: 'https://schema.org/InStore',
+  },
+};
+---
+<Base lang={lang} title={title} description={description} altPaths={altPaths} jsonld={jsonld} ogImage={img ?? undefined}>
+  <nav class="crumb"><a href={`/${lang}/`}>← {s.backToAll}</a></nav>
+
+  <div class="detail-grid">
+    <div class="col-media">
+      <div class="hero-img">
+        {img
+          ? <img src={img} alt={`${name} — ${p.ko}`} width="800" height="600" />
+          : <div class="ph" style="text-align:center;padding:20px">
+              <b style="display:block;font-size:22px;margin-bottom:6px">{p.ko}</b>
+              <span style="color:var(--ink-3);font-size:12px">{s.photoPending}</span>
+            </div>}
+      </div>
+    </div>
+
+    <div class="col-text">
+      <div class="detail-head">
+        <h1>{name}</h1>
+        <p class="detail-ko">{p.ko}{brand ? ` · ${brand}` : ''}</p>
+      </div>
+
+      <p class="tagline">{c.tagline}</p>
+
+      <div class="actions">
+        <button class="btn primary" data-save={p.slug} aria-pressed="false" type="button">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3v18l7-4 7 4V3z"/></svg>
+          {s.save}
+        </button>
+        <a class="btn" href={`/${lang}/list/`}>{s.myList}</a>
+      </div>
+
+      {c.warning && <div class="notice"><strong>⚠︎</strong>{c.warning}</div>}
+
+      <section class="block"><h2>{s.taste}</h2><p>{c.taste}</p></section>
+      <section class="block"><h2>{s.texture}</h2><p>{c.texture}</p></section>
+      <section class="block"><h2>{s.findIt}</h2><p>{c.findIt}</p></section>
+      <section class="block"><h2>{s.whoFor}</h2><p>{c.whoFor}</p></section>
+
+      {p.variants.length > 0 && (
+        <section class="block">
+          <h2>{s.variants}</h2>
+          <div class="variants">
+            {p.variants.map((v) => (
+              <div class="variant"><b>{v.ko}</b><span>{v.label}</span></div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <section class="block">
+        <h2>{s.facts}</h2>
+        <dl class="factlist">
+          <div><dt>{s.koreanName}</dt><dd>{p.ko}</dd></div>
+          {brand && <div><dt>{s.brand}</dt><dd>{brand}</dd></div>}
+          <div><dt>{s.category}</dt><dd>{categories[p.category]?.[lang] ?? p.category}</dd></div>
+          <div><dt>{s.price}</dt><dd>{priceLabel(p)}</dd></div>
+          <div><dt>{s.wrapped}</dt><dd>{p.individuallyWrapped ? s.yes : s.no}</dd></div>
+          <div><dt>{s.gift}</dt><dd>{p.giftFriendly ? s.yes : s.no}</dd></div>
+          <div>
+            <dt>{s.spice}</dt>
+            <dd><span class="spice">{[1,2,3,4,5].map((i) => <i class={i <= p.spicy ? 'on' : ''}>🌶</i>)}</span></dd>
+          </div>
+          <div>
+            <dt>{s.allergens}</dt>
+            <dd>{p.allergens.contains.map((a) => allergenLabels[a]?.[lang] ?? a).join(' · ')}
+              {p.allergens.status === 'draft' && <span style="color:var(--ink-3);font-weight:400"> ({s.unverified})</span>}
+            </dd>
+          </div>
+          <div>
+            <dt>{s.diet}</dt>
+            <dd>
+              {[p.diet.porkFree && s.porkFree, p.diet.beefFree && s.beefFree, p.diet.vegetarian && s.vegetarian]
+                .filter(Boolean).join(' · ') || '—'}
+              {p.diet.status === 'draft' && <span style="color:var(--ink-3);font-weight:400"> ({s.unverified})</span>}
+            </dd>
+          </div>
+        </dl>
+      </section>
+
+      <div class="notice"><strong>⚠︎ {s.unverified}</strong>{s.draftWarning}</div>
+    </div>
+  </div>
+
+  {related.length > 0 && (
+    <section class="block">
+      <h2>{s.relatedTitle}</h2>
+      <div class="grid">
+        {related.map((r) => <ProductCard p={r} lang={lang} />)}
+      </div>
+    </section>
+  )}
+</Base>

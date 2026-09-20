@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.astro/
+_refs/*
+!_refs/README.md
+public/images/products/*
+!public/images/products/.gitkeep
+!public/images/products/*.credit.txt
+.DS_Store

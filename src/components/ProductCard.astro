@@ -1,0 +1,31 @@
+---
+import { imageFor, nameFor, filterPayload, type Product } from '../lib/products';
+import { t, type Lang } from '../i18n/ui';
+
+interface Props { p: Product; lang: Lang }
+const { p, lang } = Astro.props;
+const s = t(lang);
+const img = imageFor(p.slug);
+const name = nameFor(p, lang);
+---
+<article class="card" data-product={JSON.stringify(filterPayload(p, lang))}>
+  <a href={`/${lang}/snacks/${p.slug}/`}>
+    <div class="thumb">
+      {img
+        ? <img src={img} alt={`${name} — ${p.ko}`} loading="lazy" decoding="async" width="400" height="400" />
+        : <div class="ph"><b>{p.ko}</b>{s.photoPending}</div>}
+    </div>
+    <div class="card-body">
+      <h3>{name}</h3>
+      <p class="card-ko">{p.ko}{p.brand[lang] ? ` · ${p.brand[lang]}` : ''}</p>
+      <div class="card-tags">
+        {p.spicy >= 3 && <span class="tag hot">🌶 {p.spicy}/5</span>}
+        {p.individuallyWrapped && <span class="tag">{s.optWrapped}</span>}
+        {p.giftFriendly && <span class="tag">{s.optGift}</span>}
+      </div>
+    </div>
+  </a>
+  <button class="savebtn" data-save={p.slug} aria-pressed="false" aria-label={s.save} type="button">
+    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3v18l7-4 7 4V3z"/></svg>
+  </button>
+</article>
